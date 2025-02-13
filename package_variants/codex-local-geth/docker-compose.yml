@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  codex-node:
+    environment:
+      CODEX_ETH_PROVIDER: http://geth.codex-local-geth.public.dappnode:8545
+    depends_on:
+      - geth
+
+  geth:
+    build:
+      context: ./geth
+      dockerfile: Dockerfile
+      args:
+        UPSTREAM_VERSION_GETH: v1.13.15
+    image: geth.codex.public.dappnode.eth:0.1.0
+    restart: unless-stopped
+    environment:
+      NETWORK: testnet
+      GETH_DATADIR: /data
+      GETH_NETWORKID: 789987
+      GETH_SYNCMODE: snap
+      GETH_GCMODE: full
+      GETH_NAT: auto
+      GETH_PORT: 40303
+      GETH_DISCOVERY_PORT: 40303
+      GETH_VERBOSITY: 3
+      GETH_HTTP: true
+      GETH_HTTP_PORT: 8545
+      GETH_HTTP_ADDR: 0.0.0.0
+      GETH_HTTP_VHOSTS: "*"
+      GETH_HTTP_CORSDOMAIN: "*"
+      GETH_WS: true
+      GETH_WS_PORT: 8546
+      GETH_WS_ADDR: 0.0.0.0
+      GETH_WS_ORIGINS: "*"
+    ports:
+      - 40303:40303/tcp # Network
+      - 40303:40303/udp # P2P discovery
+    volumes:
+      - geth-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: 5
+
+volumes:
+  geth-data: {}

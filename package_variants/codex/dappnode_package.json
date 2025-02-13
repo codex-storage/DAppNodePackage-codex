@@ -1,0 +1,9 @@
+{
+  "name": "codex.public.dappnode.eth",
+  "version": "0.1.0",
+  "links": {
+    "homepage": "https://codex.storage",
+    "ui": "http://codex.public.dappnode",
+    "api": "http://codex-node.codex.public.dappnode:8080/api/codex/v1"
+  }
+}

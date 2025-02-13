@@ -1,0 +1,17 @@
+# Variables
+ARG UPSTREAM_VERSION_GETH
+ARG GENESIS_DIR=/
+ARG GENESIS_PREFIX=genesis
+
+# Create
+FROM ethereum/client-go:${UPSTREAM_VERSION_GETH}
+ARG GENESIS_DIR
+ARG GENESIS_PREFIX
+
+COPY --chmod=0755 ${GENESIS_PREFIX}-*.json ${GENESIS_DIR}
+COPY --chmod=0755 docker-entrypoint.sh /docker-entrypoint.sh
+
+ENV GENESIS_DIR=${GENESIS_DIR}
+ENV GENESIS_PREFIX=${GENESIS_PREFIX}
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

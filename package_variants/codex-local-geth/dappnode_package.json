@@ -1,0 +1,9 @@
+{
+  "name": "codex-local-geth.public.dappnode.eth",
+  "version": "0.1.0",
+  "links": {
+    "homepage": "https://codex.storage",
+    "ui": "http://codex-local-geth.public.dappnode",
+    "api": "http://codex-node.codex-local-geth.public.dappnode:8080/api/codex/v1"
+  }
+}

@@ -1,0 +1,239 @@
+version: "2"
+fields:
+  - id: MODE
+    target:
+      type: environment
+      name: MODE
+      service: codex-node
+    title: Codex mode
+    description: >-
+      - **`Codex node`** - useful for local testing/development and basic/files sharing.
+
+      - **`Codex node with marketplace support`** (`Recommended`) - you can share files and buy the storage, this is the main mode and should be used by the end users.
+
+      - **`Codex storage node`** - should be used by storage providers or if you would like to sell your local storage.
+    enum:
+      - codex-node
+      - codex-node-with-marketplace
+      - codex-storage-node
+    required: true
+
+  - id: NETWORK
+    target:
+      type: environment
+      name: NETWORK
+      service: [codex-node, geth]
+    title: Codex network
+    description: >-
+      - **`Testnet`** - Codex Testnet network. Please check the [docs](https://docs.codex.storage/networks/networks) for available networks.
+    enum:
+      - testnet
+    required: true
+
+  - id: ETH_PRIVATE_KEY
+    target:
+      type: environment
+      name: ETH_PRIVATE_KEY
+      service: codex-node
+    title: ETH_PRIVATE_KEY
+    description: >-
+      Ethereum private key which will be saved to a file and passed as a value for `CODEX_ETH_PRIVATE_KEY` variable.
+    secret: true
+    pattern: "^0x[a-fA-F0-9]{64}$"
+    patternErrorMessage: Must be a valid private key (0x1fd16a...)
+    required: true
+    if: { "MODE": { "enum": ["codex-node-with-marketplace", "codex-storage-node"] } }
+
+  - id: CODEX_ETH_PROVIDER
+    target:
+      type: environment
+      name: CODEX_ETH_PROVIDER
+      service: codex-node
+    title: CODEX_ETH_PROVIDER
+    description: >-
+      The URL of the JSON-RPC API of the Ethereum node - use [Public RPC endpoint](https://docs.codex.storage/networks/networks) or local Geth node RPC.
+    pattern: >-
+      ^(http(s|)\:\/\/|)((([a-zA-Z0-9-_]{1,}\.){1,})([a-zA-Z]{1}[a-zA-Z0-9-]{1,}))(:[0-9]{1,}|)(\/[a-zA-Z0-9_~#?\+\&\.\/-=%-]{1,}|)$
+    patternErrorMessage: Must be a valid URL
+    required: true
+    if: { "MODE": { "enum": ["codex-node-with-marketplace", "codex-storage-node"] } }
+
+  # We can't make 'required' conditional and need to define save variable two times
+  - id: CODEX_MARKETPLACE_ADDRESS-node-with-marketplace-support
+    target:
+      type: environment
+      name: CODEX_MARKETPLACE_ADDRESS
+      service: codex-node
+    title: CODEX_MARKETPLACE_ADDRESS
+    description: >-
+      Address of deployed Marketplace contract.
+
+      We should set this variable **only if we would like to override auto-detected address**. Please check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
+    pattern: "^0x[a-fA-F0-9]{40}$"
+    patternErrorMessage: Must be a valid Ethereum address
+    required: false
+    if: { "MODE": { "enum": ["codex-node-with-marketplace"] } }
+
+  - id: CODEX_MARKETPLACE_ADDRESS-storage-node
+    target:
+      type: environment
+      name: CODEX_MARKETPLACE_ADDRESS
+      service: codex-node
+    title: CODEX_MARKETPLACE_ADDRESS
+    description: >-
+      Address of deployed Marketplace contract.
+
+      We should set this variable because we are running in **Codex `storage node`** mode. Please check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
+    pattern: "^0x[a-fA-F0-9]{40}$"
+    patternErrorMessage: Must be a valid Ethereum address
+    required: true
+    if: { "MODE": { "enum": ["codex-storage-node"] } }
+
+  - id: IP_MODE
+    target:
+      type: environment
+      name: IP_MODE
+      service: codex-node
+    title: IP detection mode
+    description: >-
+      Set your Public IP address manually or use autodetection.
+    enum:
+      - auto
+      - manual
+    required: true
+
+  - id: CODEX_NAT
+    target:
+      type: environment
+      name: CODEX_NAT
+      service: codex-node
+    title: CODEX_NAT
+    description: >-
+      Public IP address to announce behind a NAT.
+    pattern: "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)$"
+    patternErrorMessage: Must be a valid IP address
+    required: true
+    if: { "IP_MODE": { "enum": ["manual"] } }
+
+  - id: NAT_PUBLIC_IP_AUTO
+    target:
+      type: environment
+      name: NAT_PUBLIC_IP_AUTO
+      service: codex-node
+    title: NAT_PUBLIC_IP_AUTO
+    description: >-
+      IP Lookup Service URL to be used to Public IP address autodetect, default = [`https://ip.codex.storage`](https://ip.codex.storage).
+    pattern: >-
+      ^(http(s|)\:\/\/|)((([a-zA-Z0-9-_]{1,}\.){1,})([a-zA-Z]{1}[a-zA-Z0-9-]{1,}))(:[0-9]{1,}|)(\/[a-zA-Z0-9_~#?\+\&\.\/-=%-]{1,}|)$
+    patternErrorMessage: Must be a valid URL
+    required: true
+    if: { "IP_MODE": { "enum": ["auto"] } }
+
+  # - id: CODEX_METRICS
+  #   target:
+  #     type: environment
+  #     name: CODEX_METRICS
+  #     service: codex-node
+  #   title: CODEX_METRICS
+  #   description: >-
+  #     Enable the metrics server, default = `false`.
+  #   enum:
+  #     - "true"
+  #     - "false"
+  #   required: false
+
+  - id: CODEX_STORAGE_QUOTA
+    target:
+      type: environment
+      name: CODEX_STORAGE_QUOTA
+      service: codex-node
+    title: CODEX_STORAGE_QUOTA
+    description: >-
+      The size of the total storage quota dedicated to the node, default = `8gb`. Accept common units like kb, mb, gb, tb.
+    pattern: "^[0-9A-Za-z]+$"
+    patternErrorMessage: Must be a valid storage quota value - number with an optional unit
+    required: true
+
+  - id: CODEX_BLOCK_TTL
+    target:
+      type: environment
+      name: CODEX_BLOCK_TTL
+      service: codex-node
+    title: CODEX_BLOCK_TTL
+    description: >-
+      Default block timeout in seconds - 0 disables the ttl, default `24h`. Accept common units like s, h, d, w.
+    pattern: "^[0-9A-Za-z]+$"
+    patternErrorMessage: Must be a valid block timeout - number with an optional unit
+    required: true
+
+  - id: CODEX_LOG_LEVEL
+    target:
+      type: environment
+      name: CODEX_LOG_LEVEL
+      service: codex-node
+    title: CODEX_LOG_LEVEL
+    description: >-
+      Sets the log level, default = `info`. Available options: `info`, `warn`, `error`, `debug`, `trace`. Check the [docs](https://docs.codex.storage/learn/run#logging) for more details.
+    pattern: "^[A-Za-z-,;:]+$"
+    patternErrorMessage: Must be a valid log level
+    required: true
+
+  - id: CODEX_API_PORT
+    target:
+      type: environment
+      name: CODEX_API_PORT
+      service: codex-node
+    title: CODEX_API_PORT
+    description: >-
+      The REST API port, default = `8080`.
+    pattern: "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0][0-9]{1,4})|([0-9]{1,4}))$"
+    patternErrorMessage: Must be a valid port number
+    required: false
+
+  - id: CODEX_DISC_PORT
+    target:
+      type: environment
+      name: CODEX_DISC_PORT
+      service: codex-node
+    title: CODEX_DISC_PORT
+    description: >-
+      Discovery (UDP) port, default = `8090`.
+    pattern: "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0][0-9]{1,4})|([0-9]{1,4}))$"
+    patternErrorMessage: Must be a valid port number
+    required: false
+
+  - id: EXTRA_OPTS
+    target:
+      type: environment
+      name: EXTRA_OPTS
+      service: codex-node
+    title: EXTRA_OPTS
+    description: >-
+      Extra options to pass to the Codex node. Check [Codex CLI options](https://docs.codex.storage/learn/run#cli-options) for more details.
+    pattern: "^.*$"
+    patternErrorMessage: Must be a valid string
+    required: false
+
+  - id: portMapping_CODEX_LISTEN_ADDRS
+    target:
+      type: portMapping
+      containerPort: 8070/TCP
+      service: codex-node
+    title: Port mapping for Codex Node - CODEX_LISTEN_ADDRS
+    description: >-
+      Transport (TCP) port, default = `8070`.
+    pattern: "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0][0-9]{1,4})|([0-9]{1,4}))$"
+    patternErrorMessage: Must be a valid port number
+    required: true
+
+  - id: portMapping_CODEX_DISC_PORT
+    target:
+      type: portMapping
+      containerPort: 8090/UDP
+      service: codex-node
+    title: Port mapping for Codex Node - CODEX_DISC_PORT
+    description: >-
+      Discovery (UDP) port, default = `8090`.
+    pattern: "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0][0-9]{1,4})|([0-9]{1,4}))$"
+    patternErrorMessage: Must be a valid port number
+    required: true

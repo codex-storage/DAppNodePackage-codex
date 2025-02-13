@@ -1,0 +1,59 @@
+version: "3.8"
+services:
+  codex-node:
+    build:
+      context: ./codex-node
+      dockerfile: Dockerfile
+      args:
+        UPSTREAM_VERSION_CODEX_NODE: 0.1.9
+    image: codex-node.public.dappnode.eth:0.1.0
+    restart: unless-stopped
+    environment:
+      MODE: codex-node-with-marketplace
+      NETWORK: testnet
+      IP_MODE: auto
+      EXTRA_OPTS: ""
+      CODEX_DATA_DIR: /data
+      CODEX_NAT: ""
+      # CODEX_METRICS: "false"
+      # CODEX_METRICS_ADDRESS: 0.0.0.0
+      # CODEX_METRICS_PORT: 8008
+      CODEX_API_BINDADDR: 0.0.0.0
+      CODEX_API_PORT: 8080
+      CODEX_LISTEN_ADDRS: /ip4/0.0.0.0/tcp/8070
+      CODEX_DISC_PORT: 8090
+      CODEX_LOG_LEVEL: info
+      CODEX_STORAGE_QUOTA: 8gb
+      CODEX_BLOCK_TTL: 24h
+      CODEX_API_CORS_ORIGIN: "*"
+      CODEX_MARKETPLACE_ADDRESS: ""
+      CODEX_ETH_PROVIDER: https://rpc.testnet.codex.storage
+      ETH_PRIVATE_KEY: ""
+      NAT_PUBLIC_IP_AUTO: https://ip.codex.storage
+    ports:
+      - 8070:8070/tcp # P2P transport
+      - 8090:8090/udp # P2P discovery
+    volumes:
+      - codex-node-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: 5
+
+  codex-app:
+    build:
+      context: ./codex-app
+      dockerfile: Dockerfile
+      args:
+        UPSTREAM_VERSION_CODEX_APP: 0.0.13
+    image: codex-app.public.dappnode.eth:0.1.0
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: 5
+
+volumes:
+  codex-node-data: {}
