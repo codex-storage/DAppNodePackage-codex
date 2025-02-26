@@ -25,7 +25,7 @@ fields:
       service: [codex-node, geth]
     title: Codex network
     description: >-
-      - **`Testnet`** - Codex Testnet network. Please check the [docs](https://docs.codex.storage/networks/networks) for available networks.
+      - **`Testnet`** - Codex Testnet network. Check the [docs](https://docs.codex.storage/networks/networks) for available networks.
     enum:
       - testnet
     required: true
@@ -68,7 +68,7 @@ fields:
     description: >-
       Address of deployed Marketplace contract.
 
-      We should set this variable **only if we would like to override auto-detected address**. Please check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
+      We should set this variable **only if we would like to override auto-detected address**. Check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
     pattern: "^0x[a-fA-F0-9]{40}$"
     patternErrorMessage: Must be a valid Ethereum address
     required: false
@@ -83,7 +83,7 @@ fields:
     description: >-
       Address of deployed Marketplace contract.
 
-      We should set this variable because we are running in **Codex `storage node`** mode. Please check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
+      We should set this variable because we are running in **Codex `storage node`** mode. Check the address for the network you are using in the [docs](https://docs.codex.storage/networks/networks).
     pattern: "^0x[a-fA-F0-9]{40}$"
     patternErrorMessage: Must be a valid Ethereum address
     required: true
@@ -109,8 +109,8 @@ fields:
       service: codex-node
     title: CODEX_NAT
     description: >-
-      Public IP address to announce behind a NAT.
-    pattern: "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)$"
+      Specify method to use for determining public address. Must be one of: `any`, `none`, `upnp`, `pmp`, `extip:<IP>`, default = `any`. Check the [docs](https://docs.codex.storage/learn/run#nat-configuration) for more details.
+    pattern: "^(any|none|upnp|pmp|extip:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0))$"
     patternErrorMessage: Must be a valid IP address
     required: true
     if: { "IP_MODE": { "enum": ["manual"] } }
@@ -209,7 +209,7 @@ fields:
       service: codex-node
     title: EXTRA_OPTS
     description: >-
-      Extra options to pass to the Codex node. Check [Codex CLI options](https://docs.codex.storage/learn/run#cli-options) for more details.
+      Extra options to pass to the Codex node. Check the [docs](https://docs.codex.storage/learn/run#cli-options) for more details.
     pattern: "^.*$"
     patternErrorMessage: Must be a valid string
     required: false

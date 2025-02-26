@@ -1,4 +1,4 @@
-# Codex Dappnode package
+# Codex Dappnode packages
 
 <p align="center" width="100%">
   <img src="avatar-codex.png" alt="Codex Dappnode package" />
@@ -29,9 +29,14 @@
  # Directory
  cd DAppNodePackage-codex
 
- # Build all packages ~ 10 minutes
+ # Build all packages (~ 10 minutes) - use your IPFS package Container IP
  npx @dappnode/dappnodesdk build --all-variants --provider=http://172.33.0.6:5001
  ```
+
+  | Package               | Link                                                                                                                                                   |
+  | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | Codex                 | [`/ipfs/QmQjh7iCM97U7rAzALsJz7brwLttrwYirG6EKYhRAA3qys`](http://my.dappnode/installer/public/%2Fipfs%2FQmQjh7iCM97U7rAzALsJz7brwLttrwYirG6EKYhRAA3qys) |
+  | Codex with local Geth | [`/ipfs/Qmdpnv5Kev3moyobAKbKhU7of1DywJ5VEDKd3f2ti199tB`](http://my.dappnode/installer/public/%2Fipfs%2FQmdpnv5Kev3moyobAKbKhU7of1DywJ5VEDKd3f2ti199tB) |
 
 
 ## Todo
