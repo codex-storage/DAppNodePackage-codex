@@ -109,8 +109,8 @@ fields:
       service: codex-node
     title: CODEX_NAT
     description: >-
-      Public IP address to announce behind a NAT.
-    pattern: "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)$"
+      Specify method to use for determining public address. Must be one of: `any`, `none`, `upnp`, `pmp`, `extip:<IP>`, default = `any`. Check the [docs](https://docs.codex.storage/learn/run#nat-configuration) for more details.
+    pattern: "^(any|none|upnp|pmp|extip:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0))$"
     patternErrorMessage: Must be a valid IP address
     required: true
     if: { "IP_MODE": { "enum": ["manual"] } }
