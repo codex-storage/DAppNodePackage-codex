@@ -35,8 +35,8 @@
 
   | Package               | Link                                                                                                                                                   |
   | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | Codex                 | [`/ipfs/QmQjh7iCM97U7rAzALsJz7brwLttrwYirG6EKYhRAA3qys`](http://my.dappnode/installer/public/%2Fipfs%2FQmQjh7iCM97U7rAzALsJz7brwLttrwYirG6EKYhRAA3qys) |
-  | Codex with local Geth | [`/ipfs/Qmdpnv5Kev3moyobAKbKhU7of1DywJ5VEDKd3f2ti199tB`](http://my.dappnode/installer/public/%2Fipfs%2FQmdpnv5Kev3moyobAKbKhU7of1DywJ5VEDKd3f2ti199tB) |
+  | Codex                 | [`/ipfs/QmSmUyTgCZBL1Aa4MdVisvWSqdjvvQp6yZ1Nhg9BBWH3Jx`](http://my.dappnode/installer/public/%2Fipfs%2FQmSmUyTgCZBL1Aa4MdVisvWSqdjvvQp6yZ1Nhg9BBWH3Jx) |
+  | Codex with local Geth | [`/ipfs/QmUogXzAFpY5VHMQ83hhH2Rcbam6Kim6ekGP6mVxcgSwjk`](http://my.dappnode/installer/public/%2Fipfs%2FQmUogXzAFpY5VHMQ83hhH2Rcbam6Kim6ekGP6mVxcgSwjk) |
 
 
 ## Todo
