@@ -5,8 +5,8 @@ services:
       context: ./codex-node
       dockerfile: Dockerfile
       args:
-        UPSTREAM_VERSION_CODEX_NODE: 0.2.1
-    image: codex-node.public.dappnode.eth:0.2.1
+        UPSTREAM_VERSION_CODEX_NODE: 0.2.3
+    image: codex-node.public.dappnode.eth:0.2.3
     restart: unless-stopped
     environment:
       MODE: codex-node-with-marketplace
