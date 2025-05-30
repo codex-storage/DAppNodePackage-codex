@@ -2,7 +2,7 @@
   "upstream": [
     {
       "repo": "codex-storage/nim-codex",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "arg": "UPSTREAM_VERSION_CODEX_NODE"
     },
     {
