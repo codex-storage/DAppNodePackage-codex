@@ -116,12 +116,12 @@
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-    # Node 20
-    nvm install 20
+    # Node 22
+    nvm install 22
 
     # Check
     node --version
-    # v20.18.2
+    # v22.16.0
     ```
 
  4. Install [DAppNodeSDK](https://github.com/dappnode/DAppNodeSDK) on remote Dappnode
@@ -202,9 +202,8 @@
 
 ## Known issues
 
- 1. Latest [Node.js LTS release 22](https://nodejs.org/en/about/previous-releases), is not supported and we should use version 20.
- 2. During local package build it is uploaded to the local IPFS node, but in the Dappnode UI package avatar is loaded from the https://gateway.ipfs.dappnode.io, so most probably it will not be shown and it is not so clear what is the issue. Maybe something is wrong with avatar or something else? We can use default avatar, which is known by Dappnode IPFS gateway.
- 3. File `getting-started.md` is not specified in the official documentation, but it exists and is very usefully.
- 4. Dappnodesdk does not support `compose.yaml` file, [which is default and preferred](https://docs.docker.com/compose/intro/compose-application-model/).
- 5. Often time it can be more effective to [explorer existing packages](https://github.com/dappnode?q=DAppNodePackage&type=all&language=&sort=) configuration, than to use a documentation.
- 6. During the package build, Docker warn that ["the attribute `version` is obsolete"](https://docs.docker.com/reference/compose-file/version-and-name/#version-top-level-element-obsolete), but dappnodesdk will fail if we remove it - that is very confusing.
+ 1. During local package build it is uploaded to the local IPFS node, but in the Dappnode UI package avatar is loaded from the https://gateway.ipfs.dappnode.io, so most probably it will not be shown and it is not so clear what is the issue. Maybe something is wrong with avatar or something else? We can use default avatar, which is known by Dappnode IPFS gateway.
+ 2. File `getting-started.md` is not specified in the official documentation, but it exists and is very usefully.
+ 3. Dappnodesdk does not support `compose.yaml` file, [which is default and preferred](https://docs.docker.com/compose/intro/compose-application-model/).
+ 4. Often time it can be more effective to [explorer existing packages](https://github.com/dappnode?q=DAppNodePackage&type=all&language=&sort=) configuration, than to use a documentation.
+ 5. During the package build, Docker warn that ["the attribute `version` is obsolete"](https://docs.docker.com/reference/compose-file/version-and-name/#version-top-level-element-obsolete), but dappnodesdk will fail if we remove it - that is very confusing.
